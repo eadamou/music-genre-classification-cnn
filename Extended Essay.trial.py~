@@ -301,6 +301,10 @@ for i in range(6):
 torch.save(Accuracies_lr,'Accuracies_results.pt')
 torch.save(Loss_lr,'Losses_results.pt')
 
+
+# In[8]:
+
+
 # Load the best model
 S = torch.load('best_model.ckpt')
 cnn.load_state_dict(S)
@@ -340,4 +344,157 @@ cm = confusion_matrix(y_true, y_pred)
 sns.heatmap(cm, annot=True, xticklabels=GTZAN_GENRES, yticklabels=GTZAN_GENRES, cmap='YlGnBu')
 print('Accuracy: %.4f' % accuracy)
 accuracylist.append(accuracy)
+
+
+# In[ ]:
+
+
+from random import shuffle
+shuffle(y_true)
+accuracy = accuracy_score(y_true, y_pred)
+cm = confusion_matrix(y_true, y_pred)
+sns.heatmap(cm, annot=True, xticklabels=GTZAN_GENRES, yticklabels=GTZAN_GENRES, cmap='YlGnBu')
+print('Randomness: %.4f' % accuracy)
+
+
+# In[18]:
+
+
+Accuracies[0][:]
+
+
+# In[29]:
+
+
+hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': curr_batchsize}
+
+
+# In[42]:
+
+
+Loss_lr.size()
+
+
+# In[43]:
+
+
+Accuracies_lr[3,:]
+
+
+# In[20]:
+
+
+Accuracies_lr[4,:]
+
+
+# In[21]:
+
+
+Accuracies_lr[5,:]
+
+
+# In[22]:
+
+
+Accuracies_lr[6,:]
+
+
+# In[37]:
+
+
+np.argmin(valid_losses)
+
+
+# In[39]:
+
+
+valid_losses[:]
+
+
+# In[ ]:
+
+
+
+
+
+# In[16]:
+
+
+Accuracies_lr[0        hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': batch_size}
+
+
+# In[35]:
+
+
+(i-1)
+
+
+# In[36]:
+
+
+i*30+epoch
+
+
+# In[46]:
+
+
+if np.argmin(valid_losses) == i*num_epochs+epoch:
+           print('Saving the best model at %d epochs!' % epoch)
+           torch.save(cnn.state_dict(), 'best_model.ckpt')
+           torch.save(hyperparams, 'best_model_hyperparams.pt')
+
+
+# In[47]:
+
+
+i*num_epochs+epoch
+
+
+# In[48]:
+
+
+torch.save(hyperparams, 'best_model_hyperparams.pt')
+
+
+# In[53]:
+
+
+0*num_epochs+epoch
+
+
+# In[55]:
+
+
+torch.save(Accuracies_lr,'results.pt')
+
+
+# In[56]:
+
+
+torch.save(Loss_lr,'results.pt')
+
+
+# In[57]:
+
+
+torch.save(Accuracies_lr,'Accuracies_results.pt')
+torch.save(Loss_lr,'Losses_results.pt')
+
+
+# In[60]:
+
+
+Accuracies_lr.size()
+
+
+# In[61]:
+
+
+Accuracies_lr
+
+
+# In[ ]:
+
+
+
 
