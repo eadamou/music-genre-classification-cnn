@@ -221,7 +221,7 @@ class CNN(nn.Module):
         return out
 
 
-# In[58]:
+# In[62]:
 
 
 from sklearn.metrics import accuracy_score, confusion_matrix
@@ -233,7 +233,7 @@ import random
 #    print ("MPS device not found.")
 device = torch.device('cpu')
 LearningRate=[1.0,0.5,0.1,0.05,0.01,0.05,0.001,0.0005,0.0001,0.00005]
-num_epochs = 15
+num_epochs = 30
 Accuracies_lr=torch.FloatTensor(len(LearningRate), num_epochs) 
 Loss_lr=torch.FloatTensor(len(LearningRate), num_epochs)
 valid_losses = []
@@ -292,7 +292,7 @@ for i in range(6):
         print('Epoch: [%d/%d], Loss_lr[%d,%d]: %.4f Accuracies_lr[%d,%d]: %.4f' % (epoch+1, num_epochs, i, epoch, Loss_lr[i,epoch].item(), i, epoch, Accuracies_lr[i,epoch].item()))
         # Save model
         valid_losses.append(valid_loss.item())
-        hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': batch_size}
+        hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': curr_batchsize}
         if np.argmin(valid_losses) == i*num_epochs+epoch:
             print('Saving the best model at %d epochs!' % epoch)
             torch.save(cnn.state_dict(), 'best_model.ckpt')
@@ -300,6 +300,10 @@ for i in range(6):
 
 torch.save(Accuracies_lr,'Accuracies_results.pt')
 torch.save(Loss_lr,'Losses_results.pt')
+
+
+# In[8]:
+
 
 # Load the best model
 S = torch.load('best_model.ckpt')
@@ -340,4 +344,15 @@ cm = confusion_matrix(y_true, y_pred)
 sns.heatmap(cm, annot=True, xticklabels=GTZAN_GENRES, yticklabels=GTZAN_GENRES, cmap='YlGnBu')
 print('Accuracy: %.4f' % accuracy)
 accuracylist.append(accuracy)
+
+
+# In[ ]:
+
+
+# from random import shuffle
+# shuffle(y_true)
+# accuracy = accuracy_score(y_true, y_pred)
+# cm = confusion_matrix(y_true, y_pred)
+# sns.heatmap(cm, annot=True, xticklabels=GTZAN_GENRES, yticklabels=GTZAN_GENRES, cmap='YlGnBu')
+# print('Randomness: %.4f' % accuracy)
 
