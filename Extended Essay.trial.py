@@ -221,7 +221,7 @@ class CNN(nn.Module):
         return out
 
 
-# In[62]:
+# In[64]:
 
 
 from sklearn.metrics import accuracy_score, confusion_matrix
@@ -295,11 +295,11 @@ for i in range(6):
         hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': curr_batchsize}
         if np.argmin(valid_losses) == i*num_epochs+epoch:
             print('Saving the best model at %d epochs!' % epoch)
-            torch.save(cnn.state_dict(), 'best_model.ckpt')
-            torch.save(hyperparams, 'best_model_hyperparams.pt')
+            torch.save(cnn.state_dict(), '%d_best_model.ckpt' %curr_batchsize)
+            torch.save(hyperparams, '%d_best_model_hyperparams.pt' %curr_batchsize)
 
-torch.save(Accuracies_lr,'Accuracies_results.pt')
-torch.save(Loss_lr,'Losses_results.pt')
+torch.save(Accuracies_lr,'%d_Accuracies_results.pt' %curr_batchsize)
+torch.save(Loss_lr,'%d_Losses_results.pt' %curr_batchsize)
 
 
 # In[8]:
