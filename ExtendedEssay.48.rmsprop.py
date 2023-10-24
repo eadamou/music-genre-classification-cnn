@@ -94,7 +94,7 @@ def get_dataloader(data_path=None,
                    split='train', 
                    num_samples=22050 * 29, 
                    num_chunks=1, 
-                   batch_size=32, 
+                   batch_size=48, 
                    num_workers=4, 
                    is_augmentation=False):
     is_shuffle = True if (split == 'train') else False
@@ -110,7 +110,7 @@ def get_dataloader(data_path=None,
                                   num_workers=num_workers)
     return data_loader
 
-curr_batchsize=32
+curr_batchsize=48
 
 
 # In[2]:
@@ -243,7 +243,7 @@ for i in range(10):
     print(LearningRate[i])
     cnn = CNN().to(device)
     loss_function = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(cnn.parameters(), lr=LearningRate[i])
+    optimizer = torch.optim.RMSprop(cnn.parameters(), lr=LearningRate[i])
 
     for epoch in range(num_epochs):
         losses = []
@@ -296,10 +296,10 @@ for i in range(10):
         hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': curr_batchsize, 'valid_loss': valid_loss, 'valid_accuracy': accuracy}
         if np.argmin(valid_losses) == i*num_epochs+epoch:
             print('Saving the best model at %d epochs!' % epoch)
-            torch.save(cnn.state_dict(), 'NEW_RESULTS/%d_best_model.adam.ckpt' %curr_batchsize)
-            torch.save(hyperparams, 'NEW_RESULTS/%d_best_model_hyperparams.adam.pt' %curr_batchsize)
+            torch.save(cnn.state_dict(), 'NEW_RESULTS/%d_best_model.rmsprop.ckpt' %curr_batchsize)
+            torch.save(hyperparams, 'NEW_RESULTS/%d_best_model_hyperparams.rmsprop.pt' %curr_batchsize)
 
-torch.save(Accuracies_lr,'NEW_RESULTS/%d_Accuracies_results.adam.pt' %curr_batchsize)
-torch.save(Loss_lr,'NEW_RESULTS/%d_Losses_results.adam.pt' %curr_batchsize)
-torch.save(test_loader, 'NEW_RESULTS/%d_dataloader.adam.pth' %curr_batchsize)
+torch.save(Accuracies_lr,'NEW_RESULTS/%d_Accuracies_results.rmsprop.pt' %curr_batchsize)
+torch.save(Loss_lr,'NEW_RESULTS/%d_Losses_results.rmsprop.pt' %curr_batchsize)
+torch.save(test_loader, 'NEW_RESULTS/%d_dataloader.rmsprop.pth' %curr_batchsize)
 

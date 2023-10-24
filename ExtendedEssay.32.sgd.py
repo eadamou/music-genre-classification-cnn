@@ -243,7 +243,7 @@ for i in range(10):
     print(LearningRate[i])
     cnn = CNN().to(device)
     loss_function = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(cnn.parameters(), lr=LearningRate[i])
+    optimizer = torch.optim.SGD(cnn.parameters(), lr=LearningRate[i])
 
     for epoch in range(num_epochs):
         losses = []
@@ -296,10 +296,10 @@ for i in range(10):
         hyperparams = {'learning_rate': LearningRate[i], 'epoch': epoch, 'batch_size': curr_batchsize, 'valid_loss': valid_loss, 'valid_accuracy': accuracy}
         if np.argmin(valid_losses) == i*num_epochs+epoch:
             print('Saving the best model at %d epochs!' % epoch)
-            torch.save(cnn.state_dict(), 'NEW_RESULTS/%d_best_model.adam.ckpt' %curr_batchsize)
-            torch.save(hyperparams, 'NEW_RESULTS/%d_best_model_hyperparams.adam.pt' %curr_batchsize)
+            torch.save(cnn.state_dict(), 'NEW_RESULTS/%d_best_model.sgd.ckpt' %curr_batchsize)
+            torch.save(hyperparams, 'NEW_RESULTS/%d_best_model_hyperparams.sgd.pt' %curr_batchsize)
 
-torch.save(Accuracies_lr,'NEW_RESULTS/%d_Accuracies_results.adam.pt' %curr_batchsize)
-torch.save(Loss_lr,'NEW_RESULTS/%d_Losses_results.adam.pt' %curr_batchsize)
-torch.save(test_loader, 'NEW_RESULTS/%d_dataloader.adam.pth' %curr_batchsize)
+torch.save(Accuracies_lr,'NEW_RESULTS/%d_Accuracies_results.sgd.pt' %curr_batchsize)
+torch.save(Loss_lr,'NEW_RESULTS/%d_Losses_results.sgd.pt' %curr_batchsize)
+torch.save(test_loader, 'NEW_RESULTS/%d_dataloader.sgd.pth' %curr_batchsize)
 
